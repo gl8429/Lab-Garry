@@ -114,8 +114,10 @@ class Task(webapp2.RequestHandler):
                 default_context = "Stream Trending Updated\n\n"
                 emailSubject = "UserID: " + users.get_current_user().nickname()
                 emailSender = users.get_current_user().email()
-                emailReceiver="lucifer92.lin@gmail.com"
-                mail.send_mail(sender = emailSender, to = emailReceiver, subject = emailSubject, body = default_context + emailContext)
+                mail.send_mail(sender = emailSender, to = emailSender, subject = emailSubject, body = default_context + emailContext)
+                mail.send_mail(sender = emailSender, to = "natviv@cs.utexas.edu", subject = emailSubject, body = default_context + emailContext)
+                mail.send_mail(sender = emailSender, to = "ragha@utexas.edu", subject = emailSubject, body = default_context + emailContext)
+
     
 class Clean(webapp2.RequestHandler):
     def post(self):
