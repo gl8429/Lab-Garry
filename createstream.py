@@ -68,7 +68,6 @@ class  CreateStream(webapp2.RequestHandler):
         stream_subscribers=self.request.get("subscribers").split(';')
         stream_url=self.request.get("url")
         emailContext = self.request.get("context")
-        default_context = "Notice: " + users.get_current_user().nickname() + " add a new stream named ' " + stream_name +"'\n\n"
         emailSubject = "Stream Update Info with UserID: " + users.get_current_user().nickname()
         emailSender = users.get_current_user().email()
         
@@ -84,6 +83,11 @@ class  CreateStream(webapp2.RequestHandler):
             stream.numberofpictures=0
             #stream.views=0
             stream.total=0
+            stream.author=users.get_current_user()
+            stream.author_name=users.get_current_user().nickname()
+            stream.url=urllib.urlencode({'streamname': stream.name})
+            stream.guesturl=urllib.urlencode({'showmore': stream.name+"=="+users.get_current_user().nickname()})
+            default_context = "Notice: " + users.get_current_user().nickname() + " add a new stream named '" + stream_name +"' and the link to the stream is"+stream.guesturl+"\n\n"
     
             if len(stream_tags)>0:
                 stream.tag=stream_tags
@@ -97,10 +101,7 @@ class  CreateStream(webapp2.RequestHandler):
             else:
                 stream.coverurl="http://i01.i.aliimg.com/wsphoto/v0/848486955_2/20cm-lovely-Meng-Qiqi.jpg"
             
-            stream.author=users.get_current_user()
-            stream.author_name=users.get_current_user().nickname()
-            stream.url=urllib.urlencode({'streamname': stream.name})
-            stream.guesturl=urllib.urlencode({'showmore': stream.name+"=="+users.get_current_user().nickname()})
+            
             stream.put()
             self.redirect('/management',permanent=False)
         else:
