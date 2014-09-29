@@ -21,7 +21,7 @@ CREATESTREAM_PAGE_TEMPLATE ="""\
       <td><b>Create</b></td>  
       <td><a href="viewallstream">View</a></td>
         <td><a href="search">Search</a></td>
-        <td><a href="trenging">Trending</a></td>
+        <td><a href="trending">Trending</a></td>
         <td><a href="social">Social</a></td>
     </tr>
   </table>
