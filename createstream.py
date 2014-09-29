@@ -68,6 +68,9 @@ class  CreateStream(webapp2.RequestHandler):
         stream_subscribers=self.request.get("subscribers").split(';')
         stream_url=self.request.get("url")
         emailContext = self.request.get("context")
+        default_context = "Notice: " + users.get_current_user().nickname() + " add a new stream named ' " + stream_name +"'\n\n"
+        emailSubject = "Stream Update Info with UserID: " + users.get_current_user().nickname()
+        emailSender = users.get_current_user().email()
         
         
         streams=Stream.query(Stream.name==stream_name, Stream.author==users.get_current_user()).fetch()
@@ -86,9 +89,6 @@ class  CreateStream(webapp2.RequestHandler):
                 stream.tag=stream_tags
             if len(stream_subscribers[0])>0:
                 stream.subscribers=stream_subscribers
-                default_context = "Notice: " + users.get_current_user().nickname() + " add a new stream named '" + stream_name +"' and the link to the stream is"+stream.guesturl+"\n\n"
-                emailSubject = "Stream Update Info with UserID: " + users.get_current_user().nickname()
-                emailSender = users.get_current_user().email()
                 for emailReceiver in stream.subscribers:
                     mail.send_mail(sender = emailSender, to = emailReceiver, subject = emailSubject, body = default_context + emailContext)
     
