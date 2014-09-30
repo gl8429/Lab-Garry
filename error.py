@@ -23,7 +23,7 @@ ERROR_PAGE_TEMPLATE ="""\
     <tr>
       <td><a href="management">Manage</td>
       <td><a href="createstream">Create</a></td>  
-      <td>View</a></td>
+      <td><a href="viewallstream">View</a></td>
         <td><a href="search">Search</a></td>
         <td><a href="trending">Trending</a></td>
         <td><a href="social">Social</a></td>

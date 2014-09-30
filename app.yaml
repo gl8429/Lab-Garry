@@ -39,19 +39,18 @@ handlers:
   
 - url: /update
   script: trending.application
-  login: required
+  #login: required
   
 - url: /task
   script: trending.application
-  login: required
+  #login: required
   
 - url: /clean
   script: trending.application
-  login: required
+  #login: required
 
 - url: /management
   script: management.application
-
   
 - url: /delstream
   script: management.application
