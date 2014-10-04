@@ -47,6 +47,9 @@ class Trending(webapp2.RequestHandler):
     def get(self):
         
         self.response.write(TRENDING_TEMPLATE)
+        gl=Global.query(Global.name=="global").fetch()
+        if(len(gl)>0):
+            gl=gl[0]
         #streams=Stream.query(Stream.author==users.get_current_user()).order(-Stream.views).fetch(3)
         counts=CountViews.query(ancestor=ndb.Key('User',users.get_current_user().nickname())).order(-CountViews.numbers).fetch(3)
 
@@ -107,28 +110,29 @@ class Update(webapp2.RequestHandler):
 
 class Task(webapp2.RequestHandler):
     def get(self):
-        if users.get_current_user():
-            gl=Global.query(Global.name=="global").fetch()
-            if(len(gl)>0):
-                gl=gl[0]
-                gl.count=gl.count+1
-                if(gl.count==gl.limit):
-                    gl.count=0
+        #if users.get_current_user():
+        gl=Global.query(Global.name=="global").fetch()
+        if(len(gl)>0):
+            gl=gl[0]
+            gl.count=gl.count+1
+            if(gl.count==gl.limit):
+                gl.count=0
+                if users.get_current_user():
                     default_context = "Stream Trending Updated\n\n"
                     emailSubject = "UserID: " + users.get_current_user().nickname()
                     emailSender = users.get_current_user().email()
                     mail.send_mail(sender = emailSender, to = emailSender, subject = emailSubject, body = default_context)
                     mail.send_mail(sender = emailSender, to = "natviv@cs.utexas.edu", subject = emailSubject, body = default_context)
                     mail.send_mail(sender = emailSender, to = "ragha@utexas.edu", subject = emailSubject, body = default_context)
-                    gl.put
+                    gl.put()
 
 class Clean(webapp2.RequestHandler):
     def get(self):
-        if users.get_current_user():
-            counts=CountViews.query(ancestor=ndb.Key('User',users.get_current_user().nickname())).fetch()
-            for count in counts:
-                count.numbers=0
-                count.put()    
+        #if users.get_current_user():
+        counts=CountViews.query().fetch()
+        for count in counts:
+            count.numbers=0
+            count.put()    
 
 application = webapp2.WSGIApplication([
     ('/trending', Trending),  
