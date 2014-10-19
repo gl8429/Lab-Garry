@@ -89,24 +89,6 @@ LOGIN_PAGE_TEMPLATE ="""\
       }
     </style>
     <link href="http://bootstrap.ninghao.net/assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-      <script src="js/jquery-1.10.2.js"></script>
-      <script src="js/jquery-ui.js"></script> 
-      <script>
-        $(document).ready(function (){
-          $.ajax({
-            type: 'POST',
-            dataType: "json",
-            url: '/api',
-            success: function(newOrder){
-            var availableTagsh = newOrder.nameList;
-            $( "#GuangyuLin" ).autocomplete({
-              source: availableTagsh
-            });
-            }
-          })
-        }); 
-        </script>
 
   </head>
 <body>
