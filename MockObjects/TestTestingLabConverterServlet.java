@@ -10,7 +10,7 @@ public class TestTestingLabConverterServlet extends TestCase {
     MockHttpServletResponse response = 
       new MockHttpServletResponse();
     
-    request.setupAddParameter("farenheitTemperature", "boo!");
+    request.setupAddParameter("farenheitTemperature", "abc!");
     response.setExpectedContentType("text/html");
     s.doGet(request,response);
     response.verify();
